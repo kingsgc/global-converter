@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Converter Landing Page</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-900 overflow-y-auto">
+
+    <!-- Navigation Bar -->
+    <nav class="bg-white shadow-md fixed top-0 left-0 w-full z-50">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            
+            <!-- Menu Icon (Left Side) -->
+            <button id="menu-btn" class="text-gray-600 focus:outline-none md:hidden">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16m-7 6h7"></path>
+                </svg>
+            </button>
+
+            <h1 class="text-2xl font-bold text-blue-600">GLOBALCONVERTER.com.ng</h1>
+
+            <!-- Desktop Menu -->
+            <ul class="hidden md:flex space-x-6">
+                <li><a href="index.html" class="text-gray-600 hover:text-blue-600 transition-colors duration-300">Home</a></li>
+                <li><a href="about.html" class="text-gray-600 hover:text-blue-600 transition-colors duration-300">About</a></li>
+                <li><a href="privatepolicy.html" class="text-gray-600 hover:text-blue-600 transition-colors duration-300">Privacy Policy</a></li>
+                <li><a href="contactus.html" class="text-gray-600 hover:text-blue-600 transition-colors duration-300">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Drawer Overlay (Background when drawer is open) -->
+    <div id="overlay" class="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 hidden z-40"></div>
+
+    <!-- Drawer (Sidebar) -->
+    <div id="drawer" class="fixed top-0 left-0 h-full w-64 bg-white shadow-lg transform -translate-x-full transition-transform duration-300 z-50">
+        <div class="p-4 flex justify-between items-center border-b">
+            <h2 class="text-xl font-bold text-blue-600">Menu</h2>
+            <button id="close-btn" class="text-gray-600 focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+        <ul class="mt-4">
+            <li><a href="index.html" class="block px-4 py-2 text-gray-600 hover:bg-gray-100">Home</a></li>
+            <li><a href="about.html" class="block px-4 py-2 text-gray-600 hover:bg-gray-100">About</a></li>
+            <li><a href="privatepolicy.html" class="block px-4 py-2 text-gray-600 hover:bg-gray-100">Privacy Policy</a></li>
+            <li><a href="contactus.html" class="block px-4 py-2 text-gray-600 hover:bg-gray-100">Contact</a></li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="min-h-screen flex flex-col justify-center items-center pt-20 pb-20">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-11/12 lg:w-2/3 mb-20">
+            
+            <!-- Forex Market Converter -->
+            <a href="forex.html" class="block bg-blue-600 text-white rounded-lg shadow-lg p-10 text-center h-40 flex flex-col justify-center transition-transform transform hover:scale-105">
+                <h2 class="text-2xl font-bold">Forex Market Converter</h2>
+                <p class="text-sm">Click to open the Forex Market Converter.</p>
+            </a>
+            
+            <!-- Cryptocurrency Converter -->
+            <a href="crypto.html" class="block bg-green-600 text-white rounded-lg shadow-lg p-10 text-center h-40 flex flex-col justify-center transition-transform transform hover:scale-105">
+                <h2 class="text-2xl font-bold">Cryptocurrency Converter</h2>
+                <p class="text-sm">Click to open the Cryptocurrency Converter.</p>
+            </a>
+
+            <!-- World Time Converter -->
+            <a href="world-time.html" class="block bg-purple-600 text-white rounded-lg shadow-lg p-10 text-center h-40 flex flex-col justify-center transition-transform transform hover:scale-105">
+                <h2 class="text-2xl font-bold">World Time Converter</h2>
+                <p class="text-sm">Click to check different time zones around the world.</p>
+            </a>
+
+            <!-- World Economic News -->
+            <a href="news.html" class="block bg-yellow-600 text-white rounded-lg shadow-lg p-10 text-center h-40 flex flex-col justify-center transition-transform transform hover:scale-105">
+                <h2 class="text-2xl font-bold">World Economic News</h2>
+                <p class="text-sm">Click to get the latest economic updates worldwide.</p>
+            </a>
+            
+        </div>
+    </div>
+
+    <!-- Buy and Sell Crypto Section -->
+    <section class="fixed bottom-0 left-0 w-full bg-white shadow-lg py-4">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <h2 class="text-lg font-bold text-gray-800">Buy and Sell Cryptocurrency</h2>
+            <div class="flex space-x-4">
+                <!-- Buy Button -->
+                <button class="bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition-colors duration-300">
+                    Buy Crypto
+                </button>
+                <!-- Sell Button -->
+                <button class="bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700 transition-colors duration-300">
+                    Sell Crypto
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- JavaScript to Control Drawer -->
+    <script>
+        const menuBtn = document.getElementById('menu-btn');
+        const closeBtn = document.getElementById('close-btn');
+        const drawer = document.getElementById('drawer');
+        const overlay = document.getElementById('overlay');
+
+        menuBtn.addEventListener('click', () => {
+            drawer.classList.remove('-translate-x-full');
+            overlay.classList.remove('hidden');
+        });
+
+        closeBtn.addEventListener('click', () => {
+            drawer.classList.add('-translate-x-full');
+            overlay.classList.add('hidden');
+        });
+
+        // Close drawer when clicking on the overlay
+        overlay.addEventListener('click', () => {
+            drawer.classList.add('-translate-x-full');
+            overlay.classList.add('hidden');
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>World Time Converter</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-900">
+
+  <!-- Top Bar with Back Arrow -->
+  <nav class="bg-white shadow-md fixed top-0 left-0 w-full z-50 flex items-center px-4 py-4">
+    <button onclick="window.location.href='index.html'" class="text-gray-600 focus:outline-none">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"></path>
+      </svg>
+    </button>
+    <h1 class="text-2xl font-bold text-purple-600 mx-auto">World Time Converter</h1>
+  </nav>
+
+  <!-- World Time Converter Section -->
+  <div class="flex flex-col justify-center items-center min-h-screen pt-20 px-4">
+    <div class="bg-white shadow-lg rounded-lg p-6 w-full max-w-lg">
+      <h2 class="text-2xl font-bold text-center text-purple-600 mb-4">Convert Time Between Time Zones</h2>
+      
+      <form id="time-converter-form">
+        <!-- Select From Time Zone -->
+        <div class="mb-4">
+          <label for="from-timezone" class="block text-gray-700 font-bold mb-2">From Time Zone:</label>
+          <select id="from-timezone" class="w-full px-4 py-2 border rounded-lg bg-gray-100">
+            <option value="UTC">UTC (Coordinated Universal Time)</option>
+            <option value="America/New_York">America/New_York (USA - EST)</option>
+            <option value="Europe/London">Europe/London (UK - GMT)</option>
+            <option value="Asia/Tokyo">Asia/Tokyo (Japan - JST)</option>
+            <option value="Australia/Sydney">Australia/Sydney (Australia - AEST)</option>
+            <option value="Asia/Kolkata">Asia/Kolkata (India - IST)</option>
+            <option value="Europe/Berlin">Europe/Berlin (Germany - CET)</option>
+            <!-- Add More Time Zones -->
+            <option value="America/Chicago">America/Chicago (USA - CST)</option>
+            <option value="America/Los_Angeles">America/Los_Angeles (USA - PST)</option>
+            <option value="Europe/Paris">Europe/Paris (France - CET)</option>
+            <option value="Asia/Dubai">Asia/Dubai (UAE - GST)</option>
+            <option value="Asia/Singapore">Asia/Singapore (Singapore - SGT)</option>
+            <option value="Africa/Lagos">Africa/Lagos (Nigeria - WAT)</option>
+            <option value="Europe/Moscow">Europe/Moscow (Russia - MSK)</option>
+            <option value="America/Argentina/Buenos_Aires">America/Argentina/Buenos_Aires (Argentina - ART)</option>
+            <option value="Asia/Shanghai">Asia/Shanghai (China - CST)</option>
+            <option value="Africa/Johannesburg">Africa/Johannesburg (South Africa - SAST)</option>
+            <!-- Add more time zones as needed -->
+          </select>
+        </div>
+
+        <!-- Select To Time Zone -->
+        <div class="mb-4">
+          <label for="to-timezone" class="block text-gray-700 font-bold mb-2">To Time Zone:</label>
+          <select id="to-timezone" class="w-full px-4 py-2 border rounded-lg bg-gray-100">
+            <option value="UTC">UTC (Coordinated Universal Time)</option>
+            <option value="America/New_York">America/New_York (USA - EST)</option>
+            <option value="Europe/London">Europe/London (UK - GMT)</option>
+            <option value="Asia/Tokyo">Asia/Tokyo (Japan - JST)</option>
+            <option value="Australia/Sydney">Australia/Sydney (Australia - AEST)</option>
+            <option value="Asia/Kolkata">Asia/Kolkata (India - IST)</option>
+            <option value="Europe/Berlin">Europe/Berlin (Germany - CET)</option>
+            <!-- Add More Time Zones -->
+            <option value="America/Chicago">America/Chicago (USA - CST)</option>
+            <option value="America/Los_Angeles">America/Los_Angeles (USA - PST)</option>
+            <option value="Europe/Paris">Europe/Paris (France - CET)</option>
+            <option value="Asia/Dubai">Asia/Dubai (UAE - GST)</option>
+            <option value="Asia/Singapore">Asia/Singapore (Singapore - SGT)</option>
+            <option value="Africa/Lagos">Africa/Lagos (Nigeria - WAT)</option>
+            <option value="Europe/Moscow">Europe/Moscow (Russia - MSK)</option>
+            <option value="America/Argentina/Buenos_Aires">America/Argentina/Buenos_Aires (Argentina - ART)</option>
+            <option value="Asia/Shanghai">Asia/Shanghai (China - CST)</option>
+            <option value="Africa/Johannesburg">Africa/Johannesburg (South Africa - SAST)</option>
+            <!-- Add more time zones as needed -->
+          </select>
+        </div>
+
+        <!-- Enter Time -->
+        <div class="mb-4">
+          <label for="base-time" class="block text-gray-700 font-bold mb-2">Enter Time (HH:MM format):</label>
+          <input type="text" id="base-time" placeholder="12:00" class="w-full px-4 py-2 border rounded-lg bg-gray-100" required>
+        </div>
+
+        <button type="submit" class="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700 transition-colors">Convert Time</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Pop-up Modal -->
+  <div id="popup" class="fixed inset-0 bg-black bg-opacity-50 hidden flex justify-center items-center">
+    <div class="bg-white p-6 rounded-lg shadow-lg w-96 text-center">
+      <h3 id="popup-title" class="text-gray-500 text-sm mb-2"></h3>
+      <h2 id="popup-time" class="text-2xl font-bold text-purple-600"></h2>
+      <button onclick="closePopup()" class="mt-4 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600">Close</button>
+    </div>
+  </div>
+
+  <script>
+    // Function to convert time between time zones
+    async function convertTime(time, fromTimezone, toTimezone) {
+      const baseDate = new Date(`1970-01-01T${time}:00Z`);
+
+      // Convert time using the "from" timezone
+      const fromDate = new Date(baseDate.toLocaleString('en-US', { timeZone: fromTimezone }));
+
+      // Convert the "from" time to the "to" timezone
+      const convertedTime = new Date(fromDate.toLocaleString('en-US', { timeZone: toTimezone }));
+
+      return convertedTime.toLocaleTimeString();
+    }
+
+    document.getElementById('time-converter-form').addEventListener('submit', async function(event) {
+      event.preventDefault();
+
+      let time = document.getElementById('base-time').value;
+      let fromTimezone = document.getElementById('from-timezone').value;
+      let toTimezone = document.getElementById('to-timezone').value;
+
+      if (!time) {
+        alert("Please enter a valid time.");
+        return;
+      }
+
+      // Convert entered time to another time zone
+      const convertedTime = await convertTime(time, fromTimezone, toTimezone);
+
+      // Show result in pop-up
+      const fromCountry = fromTimezone.split('/')[1] || 'Unknown';
+      const toCountry = toTimezone.split('/')[1] || 'Unknown';
+      document.getElementById("popup-title").textContent = `Converted Time from ${fromCountry} to ${toCountry}`;
+      document.getElementById("popup-time").textContent = `${time} in ${fromCountry} is ${convertedTime} in ${toCountry}`;
+      document.getElementById("popup").classList.remove("hidden");
+    });
+
+    function closePopup() {
+      document.getElementById("popup").classList.add("hidden");
+    }
+  </script>
+
+</body>
+</html>
